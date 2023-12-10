@@ -1,0 +1,8 @@
+{
+  "pairSetPath": "/config/pairSet.json",
+  "scale": 128,
+  "waitTime": 2000,
+  "resizeable": false,
+  "iconPath": "/images/icon.png",
+  "backsidePath": "/images/backside.png"
+}
