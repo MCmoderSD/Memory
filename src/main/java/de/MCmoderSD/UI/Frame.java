@@ -11,7 +11,9 @@ public class Frame extends JFrame {
 
     // Associations
     private final InputHandler inputHandler;
-    private final UI ui;
+    private final Field field;
+    private final InfoPanel infoPanel;
+    private final Menu menu;
     private final Controller controller;
 
     public Frame(Config config) {
@@ -20,20 +22,38 @@ public class Frame extends JFrame {
         setResizable(config.isResizeable());
         setIconImage(config.getIcon());
         setLayout(new BorderLayout());
+        setBackground(config.getBackgroundColor());
+        setForeground(config.getTextColor());
 
         inputHandler = new InputHandler(this);
-        ui = new UI(this, config);
-        controller = new Controller(this, ui, config);
+        field = new Field(this, config);
+        pack();
 
+        field.setVisible(false);
+        infoPanel = new InfoPanel(this);
+        menu = new Menu(this, config);
+        controller = new Controller(this, field, config);
 
         pack();
-        Calculate.centerOfJFrame(this, false);
+        setLocation(Calculate.centerOfJFrame(this, false));
         setVisible(true);
     }
 
     // Getter
     public Controller getController() {
         return controller;
+    }
+
+    public InfoPanel getInfoPanel() {
+        return infoPanel;
+    }
+
+    public Field getField() {
+        return field;
+    }
+
+    public Menu getMenu() {
+        return menu;
     }
 
     // Setter

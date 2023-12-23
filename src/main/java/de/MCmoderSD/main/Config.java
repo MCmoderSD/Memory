@@ -6,6 +6,7 @@ import de.MCmoderSD.utilities.json.JsonNode;
 import de.MCmoderSD.utilities.json.JsonUtility;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 @SuppressWarnings("unused")
@@ -25,10 +26,21 @@ public class Config {
     private final BufferedImage icon;
     private final ImageIcon backside;
     private final ImageIcon[] pairs;
+    private final Color backgroundColor;
+    private final Color textColor;
 
     // Language
     private final String language;
     private final String title;
+    private final String username;
+    private final String start;
+    private final String addPlayer;
+    private final String playerAdded;
+    private final String nowOnTurn;
+    private final String foundPair;
+    private final String hasNowPoints;
+    private final String wonWithPoints;
+    private final String points;
     private final String sameCards;
     private final String sameCardsTitle;
 
@@ -63,9 +75,21 @@ public class Config {
         for (int i = 0; i < pairSet.getSize(); i++)
             pairs[i] = imageReader.createImageIcon(pairSet.get("pair" + i).asText(), scale);
 
+        backgroundColor = config.get("backgroundColor").asColor();
+        textColor = config.get("textColor").asColor();
+
         // Language
         JsonNode languageSet = jsonUtility.load("/languages/" + language + ".json");
         title = languageSet.get("title").asText();
+        username = languageSet.get("username").asText();
+        start = languageSet.get("start").asText();
+        addPlayer = languageSet.get("addPlayer").asText();
+        playerAdded = languageSet.get("playerAdded").asText();
+        nowOnTurn = languageSet.get("nowOnTurn").asText();
+        foundPair = languageSet.get("foundPair").asText();
+        hasNowPoints = languageSet.get("hasNowPoints").asText();
+        wonWithPoints = languageSet.get("wonWithPoints").asText();
+        points = languageSet.get("points").asText();
         sameCards = languageSet.get("sameCards").asText();
         sameCardsTitle = languageSet.get("sameCardsTitle").asText();
     }
@@ -101,9 +125,21 @@ public class Config {
         for (int i = 0; i < pairSet.getSize(); i++)
             pairs[i] = imageReader.createImageIcon(pairSet.get("pair" + i).asText(), scale);
 
+        backgroundColor = config.get("backgroundColor").asColor();
+        textColor = config.get("textColor").asColor();
+
         // Language
         JsonNode languageSet = jsonUtility.load("/languages/" + language + ".json");
         title = languageSet.get("title").asText();
+        username = languageSet.get("username").asText();
+        start = languageSet.get("start").asText();
+        addPlayer = languageSet.get("addPlayer").asText();
+        playerAdded = languageSet.get("playerAdded").asText();
+        nowOnTurn = languageSet.get("nowOnTurn").asText();
+        foundPair = languageSet.get("foundPair").asText();
+        hasNowPoints = languageSet.get("hasNowPoints").asText();
+        wonWithPoints = languageSet.get("wonWithPoints").asText();
+        points = languageSet.get("points").asText();
         sameCards = languageSet.get("sameCards").asText();
         sameCardsTitle = languageSet.get("sameCardsTitle").asText();
     }
@@ -141,12 +177,52 @@ public class Config {
         return pairs;
     }
 
+    public Color getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public Color getTextColor() {
+        return textColor;
+    }
+
     public String getLanguage() {
         return language;
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public String getAddPlayer() {
+        return addPlayer;
+    }
+
+    public String getPlayerAdded() {
+        return playerAdded;
+    }
+
+    public String getNowOnTurn() {
+        return nowOnTurn;
+    }
+
+    public String getFoundPair() {
+        return foundPair;
+    }
+
+    public String getHasNowPoints() {
+        return hasNowPoints;
+    }
+
+    public String getWonWithPoints() {
+        return wonWithPoints;
     }
 
     public String getSameCards() {

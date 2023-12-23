@@ -1,5 +1,14 @@
 {
   "title": "Memory",
+  "username": "Username:",
+  "addPlayer": "Add player",
+  "start": "Start game",
+  "playerAdded": "Added ",
+  "nowOnTurn": " is now on turn!",
+  "foundPair": " found a pair!",
+  "hasNowPoints": " now has ",
+  "wonWithPoints": " has won with ",
+  "points": " points!",
   "sameCards": "You can't select the same card twice!",
   "sameCardsTitle": "Same card!"
 }

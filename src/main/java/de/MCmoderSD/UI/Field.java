@@ -3,12 +3,13 @@ package de.MCmoderSD.UI;
 import de.MCmoderSD.main.Config;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Board extends JPanel {
+public class Field extends JPanel {
 
     // Associations
     private final Config config;
@@ -16,7 +17,7 @@ public class Board extends JPanel {
     // Attributes
     private final HashMap<JButton, ImageIcon> buttonImageMap;
 
-    public Board(UI ui, Frame frame, Config config) {
+    public Field(Frame frame, Config config) {
         super();
 
         this.config = config;
@@ -24,14 +25,15 @@ public class Board extends JPanel {
 
         int totalCards = pairImages.length * 2;
 
-
         int columns = (int) Math.sqrt(totalCards);
         int rows = totalCards / columns;
 
 
         buttonImageMap = new HashMap<>();
         setLayout(new GridLayout(rows, columns));
-        setBorder(new LineBorder(Color.BLACK));
+        setBorder(new EmptyBorder(10, 10, 10, 10));
+        setBackground(config.getBackgroundColor());
+        setForeground(config.getTextColor());
 
         ArrayList<ImageIcon> pairImageList = new ArrayList<>();
         for (ImageIcon pairImage : pairImages) {
@@ -52,8 +54,8 @@ public class Board extends JPanel {
                 add(button);
             }
 
-        ui.setPreferredSize(new Dimension(rows * config.getScale(), columns * config.getScale()));
-        ui.add(this);
+        setPreferredSize(new Dimension(columns * config.getScale(), rows * config.getScale()));
+        frame.add(this, BorderLayout.NORTH);
     }
 
     // Getter
