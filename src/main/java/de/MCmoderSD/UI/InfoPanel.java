@@ -15,7 +15,6 @@ public class InfoPanel extends JPanel {
         setBackground(frame.getBackground());
         setForeground(frame.getForeground());
 
-
         Dimension size = frame.getField().getSize();
         int padding = Math.max(size.width, size.height) / 100;
         int fontSize = size.height / 30;

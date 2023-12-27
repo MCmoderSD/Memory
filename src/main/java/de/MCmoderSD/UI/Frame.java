@@ -1,6 +1,7 @@
 package de.MCmoderSD.UI;
 
 import de.MCmoderSD.core.Controller;
+import de.MCmoderSD.data.Board;
 import de.MCmoderSD.main.Config;
 import de.MCmoderSD.utilities.Calculate;
 
@@ -25,14 +26,14 @@ public class Frame extends JFrame {
         setBackground(config.getBackgroundColor());
         setForeground(config.getTextColor());
 
+        Board board = new Board(config);
+        field = new Field(this, board, config);
         inputHandler = new InputHandler(this);
-        field = new Field(this, config);
         pack();
 
-        field.setVisible(false);
-        infoPanel = new InfoPanel(this);
         menu = new Menu(this, config);
-        controller = new Controller(this, field, config);
+        infoPanel = new InfoPanel(this);
+        controller = new Controller(this, board, config);
 
         pack();
         setLocation(Calculate.centerOfJFrame(this, false));

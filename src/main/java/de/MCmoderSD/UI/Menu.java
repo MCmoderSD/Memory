@@ -12,7 +12,7 @@ public class Menu extends JPanel {
         setBackground(config.getBackgroundColor());
         setForeground(config.getTextColor());
 
-        Dimension size = frame.getField().getSize();
+        Dimension size = frame.getField().getPreferredSize();
 
         int fontSize = size.height / 25;
         Font font = new Font("Roboto", Font.PLAIN, fontSize);

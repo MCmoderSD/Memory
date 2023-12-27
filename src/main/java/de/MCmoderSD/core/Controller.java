@@ -1,56 +1,59 @@
 package de.MCmoderSD.core;
 
-import de.MCmoderSD.UI.Field;
 import de.MCmoderSD.UI.Frame;
+import de.MCmoderSD.data.Board;
 import de.MCmoderSD.main.Config;
 import de.MCmoderSD.objects.Player;
 
-import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Objects;
 
 public class Controller {
 
     // Associations
     private final Frame frame;
+    private final Board board;
     private final Config config;
-    private final Field field;
 
     // Attributes
-    private final HashMap<JButton, ImageIcon> buttonImageMap;
     private final ArrayList<Player> players;
 
     // Variables
-    private JButton firstButton;
-    private JButton secondButton;
+    private int currentPlayer;
+    private Point firstCard;
+    private Point secondCard;
 
-    public Controller(Frame frame, Field field, Config config) {
+    public Controller(Frame frame, Board board, Config config) {
         this.frame = frame;
-        this.field = field;
+        this.board = board;
         this.config = config;
-
+        frame.getField().setVisible(false);
         players = new ArrayList<>();
-
-        buttonImageMap = field.getButtonImageMap();
     }
 
-    public void flipCard(JButton button) {
-        if (firstButton == null) {
-            firstButton = button;
-            field.showButton(button);
-        } else if (button == firstButton) frame.showMessage("You can't flip the same card twice!", "Error");
-        else if (secondButton == null) {
-            secondButton = button;
-            field.showButton(button);
+    public void flipCard(Point card) {
+        if (firstCard == null) {
+            firstCard = card;
+            frame.getField().setCard(card, board.getCard(card));
+        } else if (Objects.equals(card.toString(), firstCard.toString())) frame.showMessage("You can't flip the same card twice!", "Error");
+        else if (secondCard == null) {
+            secondCard = card;
+            frame.getField().setCard(card, board.getCard(card));
             checkForMatch();
         }
     }
 
     private void checkForMatch() {
-        if (firstButton != null && secondButton != null) {
-            if (buttonImageMap.get(firstButton).equals(buttonImageMap.get(secondButton))) {
-                firstButton = null;
-                secondButton = null;
+            if (board.getCard(firstCard).equals(board.getCard(secondCard))) {
+                firstCard = null;
+                secondCard = null;
+                Player player = players.get(currentPlayer);
+                player.addPoint();
+                frame.getInfoPanel().append(player.getName() + config.getFoundPair() + config.getHasNowPoints() + player.getPoints());
+                if (currentPlayer + 1 == players.size()) currentPlayer = 0;
+                else currentPlayer++;
+                frame.getInfoPanel().append(players.get(currentPlayer).getName() + config.getNowOnTurn());
             } else {
                 new Thread(() -> {
                     try {
@@ -58,13 +61,18 @@ public class Controller {
                     } catch (InterruptedException e) {
                         System.err.println(e.getMessage());
                     }
-                    field.hideButton(firstButton);
-                    field.hideButton(secondButton);
-                    firstButton = null;
-                    secondButton = null;
+
+                    frame.getField().setCard(firstCard, config.getBackside());
+                    frame.getField().setCard(secondCard, config.getBackside());
+                    firstCard = null;
+                    secondCard = null;
+
+                    if (currentPlayer + 1 == players.size()) currentPlayer = 0;
+                    else currentPlayer++;
+
+                    frame.getInfoPanel().append(players.get(currentPlayer).getName() + config.getNowOnTurn());
                 }).start();
             }
-        }
     }
 
     public void startGame() {
@@ -72,6 +80,7 @@ public class Controller {
         else {
             frame.getMenu().setVisible(false);
             frame.getField().setVisible(true);
+            currentPlayer = 0;
         }
     }
 
